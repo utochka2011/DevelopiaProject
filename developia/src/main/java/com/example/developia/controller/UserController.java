@@ -1,6 +1,7 @@
 package com.example.developia.controller;
 
 import com.example.developia.entity.UserEntity;
+import com.example.developia.request.RegisterRequest;
 import com.example.developia.request.UserLoginRequest;
 import com.example.developia.service.UserService;
 import com.example.developia.jwt.SecurityUtil;
@@ -14,9 +15,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-@CrossOrigin(origins="*")
 @RestController
 @RequestMapping("/auth")
+@CrossOrigin(origins = {"http://127.0.0.1:5500", "http://localhost:5500"}, allowCredentials = "true")
 public class UserController {
 
     private final UserService userService;
@@ -27,8 +28,8 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Void> register(@RequestBody UserEntity userEntity) {
-        userService.register(userEntity);
+    public ResponseEntity<Void> register(@RequestBody RegisterRequest request) {
+        userService.register(request);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -37,6 +38,7 @@ public class UserController {
         String token = userService.login(userLoginRequest.getUsername(), userLoginRequest.getPassword());
         return ResponseEntity.ok(Map.of("token", token));
     }
+
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(HttpServletRequest request) {
@@ -47,6 +49,7 @@ public class UserController {
         }
         return ResponseEntity.ok().build();
     }
+
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/me")
     public ResponseEntity<UserEntity> me() {

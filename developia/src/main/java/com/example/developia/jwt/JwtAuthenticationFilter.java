@@ -26,6 +26,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         this.userDetailsService = userDetailsService;
     }
 
+    
+    
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -37,6 +39,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String token = header.substring(7); 
             String username = jwtUtil.extractUsername(token);
 
+            if (jwtUtil.isTokenInvalidate(token)) {
+                throw new RuntimeException("использованный токен");
+            }
+            
 
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username); // Загружаем пользователя из базы данных
@@ -53,4 +59,5 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         filterChain.doFilter(request, response); 
     }
+    
 }

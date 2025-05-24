@@ -32,8 +32,10 @@ public class JwtUtil {
 	private Key getSigningKey() {
 		return Keys.hmacShaKeyFor(secret.getBytes());
 	}
-
-	// Генерация JWT токена для пользователя
+	
+	public boolean isTokenInvalidate(String token) {
+	    return invalidatedTokens.contains(token);
+	}
 	public String generateToken(String username) {
 		return Jwts.builder().setSubject(username).setIssuedAt(new Date())
 				.setExpiration(new Date(System.currentTimeMillis() + expirationMs)).signWith(getSigningKey()).compact();

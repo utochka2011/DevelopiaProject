@@ -5,6 +5,7 @@ import com.example.developia.entity.UserEntity;
 import com.example.developia.jwt.JwtUtil;
 import com.example.developia.repository.AuthorityRepository;
 import com.example.developia.repository.UserRepository;
+import com.example.developia.request.RegisterRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,21 +27,22 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public void register(UserEntity userEntity) {
-        if (userRepository.findByUsername(userEntity.getUsername()).isPresent()) {
+    public void register(RegisterRequest request) {
+        if (userRepository.findByUsername(request.getUsername()).isPresent()) {
             throw new RuntimeException("такой username уже существует");
         }
 
         UserEntity user = new UserEntity();
-        user.setUsername(userEntity.getUsername());
-        user.setPassword(passwordEncoder.encode(userEntity.getPassword()));
+        user.setUsername(request.getUsername());
+        user.setSurname(request.getSurname());
+        user.setEmail(request.getEmail());
+        user.setPhoneNumber(request.getPhoneNumber());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setEnabled(true);
-        user.setEmail(userEntity.getEmail());
-        user.setPhoneNumber(userEntity.getPhoneNumber());
         userRepository.save(user);
 
         AuthorityEntity authorityEntity = new AuthorityEntity();
-        authorityEntity.setUsername(userEntity.getUsername());
+        authorityEntity.setUsername(request.getUsername());
         authorityEntity.setAuthority("ROLE_USER");
         authorityRepository.save(authorityEntity);
     }

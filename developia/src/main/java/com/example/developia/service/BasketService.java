@@ -1,5 +1,6 @@
 package com.example.developia.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,4 +37,11 @@ public class BasketService {
 		}
 		basketRepository.save(basket);
 	}
+	public List<BasketEntity> getMyBasket() {
+	    String username = SecurityUtil.getCurrentUsername();
+	    UserEntity user = userRepository.findByUsername(username)
+	            .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
+	    return basketRepository.findByUserId(user.getId());
+	}
+
 }

@@ -19,5 +19,6 @@ public class UserEntity {
     private String password;
     private boolean enabled;
     private String email;
-    private String phoneNumber;
+    private String phoneNumber; 
+    private String surname;
 }
