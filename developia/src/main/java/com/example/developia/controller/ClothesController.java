@@ -4,13 +4,16 @@ import com.example.developia.entity.ClothesEntity;
 import com.example.developia.request.ClothesRequest;
 import com.example.developia.service.ClothesService;
 
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-@CrossOrigin(origins={"http://127.0.0.1:5500", "http://localhost:5500"}, allowCredentials = "true")
+
+@CrossOrigin(origins = {"http://127.0.0.1:5500", "http://localhost:5500"}, allowCredentials = "true")
 @RestController
 @RequestMapping("/clothes")
 public class ClothesController {
@@ -40,7 +43,7 @@ public class ClothesController {
 
     @PostMapping("/add")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public void addClothes(@RequestBody ClothesRequest clothesRequest) {
+    public void addClothes(@RequestBody @Valid ClothesRequest clothesRequest) {
         clothesService.addClothesForCurrentUser(clothesRequest);
     }
 
@@ -67,7 +70,7 @@ public class ClothesController {
 
     @PutMapping("/update/{id}")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public void updateClothes(@PathVariable Long id, @RequestBody ClothesRequest clothesRequest) {
+    public void updateClothes(@PathVariable Long id, @RequestBody @Valid ClothesRequest clothesRequest) {
         clothesService.updateClothes(id, clothesRequest);
     }
 }

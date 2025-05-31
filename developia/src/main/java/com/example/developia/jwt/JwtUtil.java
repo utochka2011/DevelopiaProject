@@ -1,4 +1,3 @@
-
 package com.example.developia.jwt;
 
 import java.security.Key;
@@ -27,15 +26,18 @@ public class JwtUtil {
 
 	public void invalidateToken(String token) {
 		invalidatedTokens.add(token);
+		System.out.println(invalidatedTokens);
+	}
+
+	public boolean isTokenInvalidate(String token) {
+		return invalidatedTokens.contains(token);
 	}
 
 	private Key getSigningKey() {
 		return Keys.hmacShaKeyFor(secret.getBytes());
 	}
-	
-	public boolean isTokenInvalidate(String token) {
-	    return invalidatedTokens.contains(token);
-	}
+
+	// Генерация JWT токена для пользователя
 	public String generateToken(String username) {
 		return Jwts.builder().setSubject(username).setIssuedAt(new Date())
 				.setExpiration(new Date(System.currentTimeMillis() + expirationMs)).signWith(getSigningKey()).compact();
