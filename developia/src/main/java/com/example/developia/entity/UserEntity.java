@@ -35,6 +35,7 @@ public class UserEntity {
     private String phoneNumber;
 
     @NotBlank(message = "Фамилия не должна быть пустой")
-    @Size(max = 50, message = "Фамилия не должна превышать 50 символов")
+    @Column(length = 5134)
     private String surname;
+
 }

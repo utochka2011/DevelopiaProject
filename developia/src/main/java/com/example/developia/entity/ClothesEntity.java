@@ -1,15 +1,12 @@
 package com.example.developia.entity;
-
 import jakarta.persistence.*;
 import lombok.*;
-
 @Entity
 @Table(name = "clothes")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 public class ClothesEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
