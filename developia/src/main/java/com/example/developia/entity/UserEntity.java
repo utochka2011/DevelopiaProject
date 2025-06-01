@@ -31,7 +31,10 @@ public class UserEntity {
     private String email;
 
     @NotBlank(message = "Номер телефона не должен быть пустым")
-    @Pattern(regexp = "^[+]?\\d{7,15}$", message = "Неверный формат номера телефона")
+    @Pattern(
+    	    regexp = "^\\+994\\s?(50|51|55|70|77)[\\s\\-]?\\d{3}[\\s\\-]?\\d{2}[\\s\\-]?\\d{2}$",
+    	    message = "Invalid phone number format"
+    	)
     private String phoneNumber;
 
     @NotBlank(message = "Фамилия не должна быть пустой")
