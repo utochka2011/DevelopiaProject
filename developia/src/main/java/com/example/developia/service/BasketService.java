@@ -64,7 +64,12 @@ public class BasketService {
         return baskets.stream()
                 .map(basket -> {
                     ClothesEntity clothesEntity = clothesRepository.findById(basket.getClothesId()).orElse(null);
+                    if (clothesEntity.getId() == null) {
+                        return null;
+                    }
 
+                    
+                    
                     BasketResponse basketResponse = new BasketResponse();
                     basketResponse.setId(clothesEntity.getId());
                     basketResponse.setBrand(clothesEntity.getBrand());

@@ -1,5 +1,7 @@
 package com.example.developia.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.annotation.Generated;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -41,10 +43,10 @@ public class ClothesRequest {
     @NotNull(message = "Цена товара не должна быть пустой")
     private Double price;
     
-    @NotBlank(message = "Размер не должен быть пустым")
+    @NotNull(message = "Размер не должен быть пустым")
     @Size(max = 10, message = "Размер не должен превышать 10 символов")
     private String size;
-    
+    @JsonProperty("imageUrl")
     private String imgUrl;
     
     @NotNull(message = "Рейтинг не должен быть пустым")

@@ -93,7 +93,7 @@ public class ClothesService {
     public void updateClothes(Long id, ClothesRequest request) {
         ClothesEntity existing = getMyClothesById(id);
         existing.setBrand(request.getBrand());
-        existing.setModel(request.getModel());
+        existing.setModel(request.getModel()); 	
         existing.setDescription(request.getDescription());
         existing.setPrice(request.getPrice());
         existing.setSize(request.getSize());

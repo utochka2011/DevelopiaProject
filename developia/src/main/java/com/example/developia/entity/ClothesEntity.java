@@ -1,4 +1,6 @@
 package com.example.developia.entity;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.*;
 import lombok.*;
 @Entity
@@ -16,6 +18,7 @@ public class ClothesEntity {
     private String description;
     private Double price;
     private String size;
+    @JsonProperty("imageUrl")
     private String imgUrl;
     private Integer rating;
     private Long ownerId;
